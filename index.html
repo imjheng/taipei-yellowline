@@ -665,36 +665,44 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </style>
 <style>
 :root{--ink:#15201F;--ink2:#48534F;--mut:#7C8783;--hair:#E7E4DD;--bg:#FBFAF7;
- --ok:#C8860D;--ok2:#8A5D06;--warn:#0E7C6B;--acc:#0F3D3A;--r:14px;
- --sh:0 1px 2px rgba(21,32,31,.06),0 8px 24px rgba(21,32,31,.10)}
+ --ok:#C8860D;--ok2:#8A5D06;--warn:#0E7C6B;--acc:#0F3D3A;
+ --sh:0 1px 2px rgba(21,32,31,.07),0 10px 28px rgba(21,32,31,.14);
+ --btm:calc(env(safe-area-inset-bottom) + 96px)}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;overscroll-behavior:none;background:var(--bg);color:var(--ink);
  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",sans-serif;
  font-feature-settings:"palt";-webkit-font-smoothing:antialiased}
+button,input{font:inherit;-webkit-tap-highlight-color:transparent}
 #map{position:absolute;inset:0}
+/* 頂欄 */
 #top{position:absolute;top:0;left:0;right:0;z-index:900;padding:calc(8px + env(safe-area-inset-top)) 10px 0;display:flex;gap:8px;pointer-events:none}
-#brand{pointer-events:auto;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.6) blur(8px);border:1px solid var(--hair);border-radius:var(--r);box-shadow:var(--sh);padding:9px 12px;flex:1;min-width:0}
+#brand{pointer-events:auto;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.6) blur(10px);border:1px solid var(--hair);border-radius:14px;box-shadow:var(--sh);padding:9px 12px;flex:1;min-width:0}
 #brand h1{margin:0;font-size:14.5px;font-weight:700;line-height:1.3}
 #brand .lg{display:flex;gap:14px;margin-top:7px;font-size:11.5px;color:var(--ink2)}
 #brand .lg span{display:flex;align-items:center;gap:5px;white-space:nowrap}
 .k{display:inline-block;width:18px;height:0;border-top:5px solid var(--ok);border-radius:3px}
 .k.w{border-top:4px dotted var(--warn)}
-#help{pointer-events:auto;width:42px;height:42px;border-radius:var(--r);background:rgba(255,255,255,.94);border:1px solid var(--hair);box-shadow:var(--sh);font-size:17px;font-weight:700;color:var(--acc)}
-.leaflet-top.leaflet-right{margin-top:calc(58px + env(safe-area-inset-top))}
+.tb{pointer-events:auto;width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.95);border:1px solid var(--hair);box-shadow:var(--sh);color:var(--acc);font-size:17px;font-weight:700;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+.tb svg{width:20px;height:20px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round}
+.leaflet-top.leaflet-right{margin-top:calc(62px + env(safe-area-inset-top))}
 .leaflet-control-zoom a{border-radius:10px!important;color:var(--acc)!important}
-#sheet{position:absolute;left:0;right:0;bottom:0;height:52%;z-index:1000;display:flex;flex-direction:column;background:#fff;border-radius:20px 20px 0 0;box-shadow:0 -14px 40px rgba(21,32,31,.14);padding-bottom:env(safe-area-inset-bottom);transition:height .22s cubic-bezier(.32,.72,0,1)}
-#sheet.min{height:calc(66px + env(safe-area-inset-bottom))}
-#grab{height:30px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
-#grab i{width:36px;height:5px;border-radius:9px;background:#DAD6CD;display:block}
-#bar{padding:2px 14px 12px;display:flex;gap:8px}
-button,input{font:inherit}
-button{border:1px solid var(--hair);background:#fff;color:var(--ink);border-radius:12px;padding:11px 14px;font-size:13.5px;-webkit-tap-highlight-color:transparent}
-#loc{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600;flex:0 0 auto}
-#fw.on{background:var(--warn);border-color:var(--warn);color:#fff;font-weight:600}
+/* 定位鈕：抬高避開瀏覽器列 */
+#loc{position:absolute;right:12px;bottom:var(--btm);z-index:900;height:48px;padding:0 18px;border-radius:24px;background:var(--acc);color:#fff;border:none;font-weight:600;font-size:14.5px;box-shadow:var(--sh)}
+#loc:active{transform:scale(.97)}
+/* 右側抽屜 */
+#panel{position:absolute;top:0;right:0;bottom:0;width:min(430px,100%);z-index:1200;background:#fff;
+ display:flex;flex-direction:column;transform:translateX(101%);transition:transform .26s cubic-bezier(.32,.72,0,1);box-shadow:-10px 0 34px rgba(21,32,31,.16)}
+#panel.on{transform:none}
+#phead{padding:calc(10px + env(safe-area-inset-top)) 12px 10px;border-bottom:1px solid var(--hair);flex:0 0 auto}
+#prow{display:flex;gap:8px;align-items:center}
 #q{flex:1;min-width:0;padding:11px 13px;font-size:16px;border:1px solid var(--hair);border-radius:12px;background:var(--bg);outline:none}
 #q:focus{border-color:var(--ok);background:#fff}
-#st{font-size:11.5px;color:var(--mut);padding:0 15px 10px;line-height:1.6}
-#list{overflow:auto;-webkit-overflow-scrolling:touch;padding:0 8px 22px}
+#close{width:44px;height:44px;border-radius:12px;border:1px solid var(--hair);background:#fff;color:var(--ink2);font-size:20px}
+#frow{display:flex;gap:7px;margin-top:9px}
+#frow button{border:1px solid var(--hair);background:#fff;border-radius:11px;padding:8px 12px;font-size:13px;color:var(--ink2)}
+#frow button.on{background:var(--warn);border-color:var(--warn);color:#fff;font-weight:600}
+#st{font-size:11.5px;color:var(--mut);padding:9px 14px 0;line-height:1.6;flex:0 0 auto}
+#list{overflow:auto;-webkit-overflow-scrolling:touch;padding:4px 8px calc(env(safe-area-inset-bottom) + 110px)}
 .it{padding:13px 7px;border-radius:12px}
 .it+.it{border-top:1px solid var(--hair)}
 .it:active{background:var(--bg)}
@@ -708,42 +716,56 @@ button{border:1px solid var(--hair);background:#fff;color:var(--ink);border-radi
 .c{font-size:11.5px;line-height:1;padding:5px 8px;border-radius:7px;background:var(--bg);color:var(--ink2);border:1px solid var(--hair)}
 .c.t{background:#FBF0D9;border-color:#F0E0B8;color:var(--ok2);font-weight:600}
 .c.y{background:#E7F3F0;border-color:#CFE6E1;color:#0B5F52;font-weight:600}
-#modal{position:absolute;inset:0;z-index:2000;background:rgba(21,32,31,.5);display:none;align-items:flex-end;justify-content:center}
+#scrim{position:absolute;inset:0;background:rgba(21,32,31,.35);z-index:1100;opacity:0;pointer-events:none;transition:opacity .22s}
+#scrim.on{opacity:1;pointer-events:auto}
+/* 說明 */
+#modal{position:absolute;inset:0;z-index:2000;background:rgba(21,32,31,.5);display:none;align-items:center;justify-content:center;padding:14px}
 #modal.on{display:flex}
-#mbox{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:88%;overflow:auto;padding:22px 20px calc(20px + env(safe-area-inset-bottom))}
+#mbox{background:#fff;border-radius:18px;width:100%;max-width:560px;max-height:86%;overflow:auto;padding:22px 20px}
 #mbox h2{margin:0 0 16px;font-size:17px}
 #mbox h3{margin:20px 0 7px;font-size:13px;color:#0B5F52;letter-spacing:.4px}
 #mbox p{margin:0 0 10px;font-size:13.5px;line-height:1.85;color:var(--ink2)}
 #mbox b{color:var(--ink)}
 #mbox .hl{background:linear-gradient(transparent 62%,#FBE7C7 62%);color:var(--ink);font-weight:700}
 #mbox ul{margin:0 0 10px;padding-left:19px;font-size:13.5px;line-height:1.85;color:var(--ink2)}
-#mbox .close{margin-top:18px;width:100%;background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600;padding:13px}
+#mbox .cls{margin-top:18px;width:100%;background:var(--acc);border:none;color:#fff;font-weight:600;padding:13px;border-radius:12px;font-size:14.5px}
 .leaflet-popup-content-wrapper{border-radius:14px}
 .leaflet-popup-content{font-size:13.5px;line-height:1.75;margin:13px 15px;color:var(--ink2)}
 .leaflet-popup-content .pt{font-size:15.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:3px}
 </style></head><body>
 <div id="map"></div>
-<div id="top"><div id="brand"><h1>台北市假日黃線可停路段</h1>
-<div class="lg"><span><i class="k"></i>實際劃設黃線</span><span><i class="k w"></i>涵蓋率低／待確認</span></div></div>
-<button id="help">?</button></div>
+<div id="top">
+ <div id="brand"><h1>台北市假日黃線可停路段</h1>
+  <div class="lg"><span><i class="k"></i>實際劃設黃線</span><span><i class="k w"></i>涵蓋率低／待確認</span></div></div>
+ <button class="tb" id="open" aria-label="路段清單"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+ <button class="tb" id="help">?</button>
+</div>
+<button id="loc">◎ 我在哪</button>
+<div id="scrim"></div>
+<div id="panel">
+ <div id="phead">
+  <div id="prow"><input id="q" type="search" placeholder="搜尋路名或地標"><button id="close" aria-label="關閉">×</button></div>
+  <div id="frow"><button id="fw">只看待確認</button><button id="fn">依距離排序</button></div>
+ </div>
+ <div id="st"></div><div id="list"></div>
+</div>
 <div id="modal"><div id="mbox">
-<h2>停之前，先確認這幾件事</h2>
-<h3>大部分情況你不需要這張地圖</h3>
-<p>黃線的預設禁停時間是<b>每天 7:00–20:00</b>，不分平日假日。<span class="hl">20:00 到隔天早上 7:00，黃線本來就能停</span>。這張地圖是找「白天也開放」的路段。</p>
-<h3>「假日」包含星期六</h3>
-<p>交工處定義：政府行政機關辦公日曆表所列的<b>星期六、星期日、放假之紀念日及民俗節日、補假及調整放假日</b>。</p>
-<h3>地圖上的線是真的</h3>
-<p>這版的線不是推算的，是<b>交工處「禁停紅黃線路段分布圖」的實際劃設資料</b>（開放資料，SHP，2024/07 版）。我把 9,377 條黃線跟表列的 101 段做空間比對，畫出來的就是地上那條線的位置與長度。</p>
-<h3>線很短不代表只有那一截</h3><p>黃線本來就會被車道出入口、路口紅線、公車彎切斷，全 101 段的涵蓋率中位數是 <b>48%</b>。但有 <b>35 段低於 30%</b>，畫出來的線遠短於表列範圍 —— 可能是 2024/07 之後重新劃設，也可能表格描述與現場不符。這些段標成綠色點線，<span class="hl">看到短線請以現場為準，不要以為只有那一小截</span>。</p><h3>但範圍還是要看附牌</h3>
-<p>圖上畫的是<b>該路段的所有黃線</b>；假日開放的範圍以<span class="hl">現場附牌箭頭指示為準，不含對向路段</span>。現場沒有附牌的黃線，就是每天 7–20 時禁停。</p>
-<h3>就算時段對了，這些地方一樣不能停</h3>
-<ul><li>紅線 —— 全日 24 小時禁止</li><li>交岔路口、公車招呼站 10 公尺內</li><li>消防栓、消防車出入口 5 公尺內</li><li>人行道、行人穿越道、橋樑、隧道</li><li>輪胎外側距緣石不得逾 60 公分（大型車 1 公尺、機車 40 公分）</li></ul>
-<h3>資料與限制</h3>
-<p>路段清單：交工處「假日開放黃線停車路段表」114/11/11 版，101 段。<br>線形：交工處「禁停紅黃線路段分布圖」2024/07 版。兩者版本有時間差，且官方註明圖資僅供參考。<b>一切以現場標誌標線為準。</b></p>
-<button class="close">開始使用</button></div></div>
-<div id="sheet"><div id="grab"><i></i></div>
-<div id="bar"><button id="loc">◎ 我在哪</button><input id="q" type="search" placeholder="搜尋路名或地標"><button id="fw">不確定</button></div>
-<div id="st"></div><div id="list"></div></div>
+ <h2>停之前，先確認這幾件事</h2>
+ <h3>大部分情況你不需要這張地圖</h3>
+ <p>黃線的預設禁停時間是<b>每天 7:00–20:00</b>，不分平日假日。<span class="hl">20:00 到隔天早上 7:00，黃線本來就能停</span>。這張地圖是找「白天也開放」的路段。</p>
+ <h3>「假日」包含星期六</h3>
+ <p>交工處定義：政府行政機關辦公日曆表所列的<b>星期六、星期日、放假之紀念日及民俗節日、補假及調整放假日</b>。</p>
+ <h3>地圖上的線是實測的</h3>
+ <p>線形取自交工處「禁停紅黃線路段分布圖」開放資料（SHP，2024/07 版），不是推算。全市 9,377 條黃線與表列 101 段做空間比對後繪出。</p>
+ <h3>線很短不代表只有那一截</h3>
+ <p>黃線本來就會被車道出入口、路口紅線、公車彎切斷，涵蓋率中位數是 <b>48%</b>。有 <b>35 段低於 30%</b>，畫出來的線遠短於表列範圍 —— 可能是 2024/07 之後重新劃設，也可能表格描述與現場不符。這些標成綠色點線，<span class="hl">請以現場為準</span>。</p>
+ <h3>範圍要看附牌</h3>
+ <p>官方明訂：附牌開放假日停車時，<span class="hl">仍需依附牌箭頭指示範圍停車，不含對向路段</span>。現場沒有附牌的黃線，就是每天 7–20 時禁停。</p>
+ <h3>就算時段對了，這些地方一樣不能停</h3>
+ <ul><li>紅線 —— 全日 24 小時禁止</li><li>交岔路口、公車招呼站 10 公尺內</li><li>消防栓、消防車出入口 5 公尺內</li><li>人行道、行人穿越道、橋樑、隧道</li><li>輪胎外側距緣石不得逾 60 公分（大型車 1 公尺、機車 40 公分）</li></ul>
+ <h3>底圖說明</h3>
+ <p>底圖為 OpenStreetMap，學校、公園的範圍常畫到路邊，黃線壓在上面時看起來會像在校地裡，那是底圖問題不是線畫錯。</p>
+ <button class="cls">開始使用</button></div></div>
 <script>/* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
  * (c) 2010-2023 Vladimir Agafonkin, (c) 2010-2011 CloudMade
@@ -755,26 +777,30 @@ const D=[{"no":"1","q":"北投","r":"東華街","dir":"南往北","s":"東華橋
 const LVT={A:'表格明寫',B:'門牌推得',C:'方向推得',D:'表列雙向'};
 const map=L.map('map',{zoomControl:false,attributionControl:false}).setView([25.045,121.54],13);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
-L.control.attribution({prefix:false,position:'bottomleft'}).addAttribution('&copy; OpenStreetMap｜線形：臺北市交工處開放資料').addTo(map);
+L.control.attribution({prefix:false,position:'bottomleft'}).addAttribution('&copy; OSM｜線形：臺北市交工處').addTo(map);
 L.control.zoom({position:'topright'}).addTo(map);
-let me=null,meMk=null,warn=false,kw='';
+let me=null,meMk=null,warn=false,bydist=false,kw='';
 const LY={};
 D.forEach(d=>{
   const col=d.ok?'#C8860D':'#0E7C6B';
-  const g=L.polyline(d.g,{color:col,weight:8,opacity:.92,lineCap:'round',dashArray:d.ok?null:'3,10'});
-  g.bindPopup('<span class="pt">'+d.r+'</span>'+d.q+'區　'+d.s+' → '+d.e
+  const cas=L.polyline(d.g,{color:'#4A3708',weight:9,opacity:.35,lineCap:'round'});
+  const ln=L.polyline(d.g,{color:col,weight:5.5,opacity:1,lineCap:'round',dashArray:d.ok?null:'2,8'});
+  const g=L.layerGroup([cas,ln]).addTo(map);
+  const html='<span class="pt">'+d.r+'</span>'+d.q+'區　'+d.s+' → '+d.e
    +'<br>假日開放 <b>'+d.t+'</b>　表列方向 '+d.dir
-   +'<br>實際劃設黃線 <b>'+d.yl+' 公尺</b>'+(d.cv>0?'（表列範圍約 '+d.cr+' 公尺，涵蓋 '+d.cv+'%）':'')+(d.ok?'':'<br><span style="color:#0E7C6B">⚠ 圖資中的黃線遠短於表列範圍，實際可停範圍可能不只圖上這幾截，也可能已重新劃設。以現場標線為準。</span>')
+   +'<br>實際劃設黃線 <b>'+d.yl+' 公尺</b>'+(d.cv>=0?'（表列範圍約 '+d.cr+' 公尺，涵蓋 '+d.cv+'%）':'')
    +'<br>停在哪一側：<b>'+d.sd+'</b>（'+(LVT[d.lv]||'?')+'）'
    +(d.nt?'<br><span style="color:#C8860D">※ '+d.nt+'</span>':'')
-   +'<br><span style="color:#7C8783;font-size:12px">開放範圍以現場附牌箭頭為準，不含對向。</span>');
-  g.addTo(map); LY[d.no]=g;
+   +(d.ok?'':'<br><span style="color:#0E7C6B">⚠ 圖資中的黃線遠短於表列範圍，實際範圍可能不只這幾截。</span>')
+   +'<br><span style="color:#7C8783;font-size:12px">開放範圍以現場附牌箭頭為準，不含對向。</span>';
+  cas.bindPopup(html); ln.bindPopup(html);
+  g.__b=cas.getBounds(); g.__p=ln; LY[d.no]=g;
 });
 const hav=(p,q)=>{const R=6371000,r=Math.PI/180;const a=Math.sin((q[0]-p[0])*r/2)**2+Math.cos(p[0]*r)*Math.cos(q[0]*r)*Math.sin((q[1]-p[1])*r/2)**2;return 2*R*Math.asin(Math.sqrt(a))};
 function render(){
   let A=D.filter(d=>(!warn||!d.ok)&&(!kw||[d.r,d.s,d.e,d.q,d.nt].join(' ').toLowerCase().includes(kw.toLowerCase())));
-  if(me)A=A.map(d=>Object.assign({},d,{_d:hav(me,d.c)})).sort((x,y)=>x._d-y._d).slice(0,40);
-  document.getElementById('st').textContent= me?('離你最近的 '+A.length+' 段 · 20:00–07:00 黃線本來就能停')
+  if(me&&bydist)A=A.map(d=>Object.assign({},d,{_d:hav(me,d.c)})).sort((x,y)=>x._d-y._d).slice(0,40);
+  document.getElementById('st').textContent=(me&&bydist)?('離你最近的 '+A.length+' 段 · 20:00–07:00 黃線本來就能停')
     :(A.length+' 段 · 線形為實際劃設資料 · 20:00–07:00 黃線本來就能停');
   document.getElementById('list').innerHTML=A.map(d=>
    '<div class="it" data-no="'+d.no+'"><div class="h"><span class="nm">'+d.r+'</span>'
@@ -782,23 +808,29 @@ function render(){
    +'</div><div class="seg">'+d.s+'<em>→</em>'+d.e+'</div>'
    +'<div class="chips"><span class="c t">'+d.t+'</span><span class="c y">黃線 '+d.yl+' m</span>'
    +'<span class="c">'+d.sd+'・'+d.lv+'</span><span class="c">'+d.dir+'</span>'
-   +(d.ok?'':'<span class="c">涵蓋 '+(d.cv>0?d.cv+'%':'低')+'</span>')+'</div></div>').join('')||'<div class="it seg">沒有符合的路段</div>';
+   +(d.ok?'':'<span class="c">涵蓋 '+(d.cv>=0?d.cv+'%':'低')+'</span>')+'</div></div>').join('')
+   ||'<div class="it seg">沒有符合的路段</div>';
 }
-function setMin(v){document.getElementById('sheet').classList.toggle('min',v)}
+function drawer(v){document.getElementById('panel').classList.toggle('on',v);document.getElementById('scrim').classList.toggle('on',v);}
+document.getElementById('open').onclick=()=>drawer(true);
+document.getElementById('close').onclick=()=>drawer(false);
+document.getElementById('scrim').onclick=()=>drawer(false);
 document.getElementById('list').onclick=e=>{const it=e.target.closest('.it');if(!it||!it.dataset.no)return;
- const l=LY[it.dataset.no]; map.fitBounds(l.getBounds(),{padding:[70,70],maxZoom:19}); setMin(true); setTimeout(()=>l.openPopup(),260);};
+ const g=LY[it.dataset.no]; drawer(false);
+ map.fitBounds(g.__b,{padding:[70,70],maxZoom:19}); setTimeout(()=>g.__p.openPopup(),300);};
 document.getElementById('loc').onclick=function(){const b=this;b.textContent='定位中…';
  navigator.geolocation.getCurrentPosition(p=>{me=[p.coords.latitude,p.coords.longitude];
   if(meMk)map.removeLayer(meMk);
   meMk=L.circleMarker(me,{radius:8,color:'#fff',weight:3,fillColor:'#1a73e8',fillOpacity:1}).addTo(map);
-  map.setView(me,16);b.textContent='◎ 重新定位';render();},
+  map.setView(me,16);b.textContent='◎ 我在哪';bydist=true;
+  document.getElementById('fn').classList.add('on');render();drawer(true);},
   e=>{b.textContent='◎ 我在哪';alert('無法取得定位：'+e.message);},{enableHighAccuracy:true,timeout:12000});};
 document.getElementById('q').oninput=e=>{kw=e.target.value.trim();render()};
 document.getElementById('fw').onclick=e=>{warn=!warn;e.target.classList.toggle('on',warn);render()};
-document.getElementById('grab').onclick=()=>setMin(!document.getElementById('sheet').classList.contains('min'));
+document.getElementById('fn').onclick=e=>{if(!me){alert('請先按右下角「我在哪」取得定位');return}bydist=!bydist;e.target.classList.toggle('on',bydist);render()};
 document.getElementById('help').onclick=()=>document.getElementById('modal').classList.add('on');
-document.querySelector('#mbox .close').onclick=()=>document.getElementById('modal').classList.remove('on');
+document.querySelector('#mbox .cls').onclick=()=>document.getElementById('modal').classList.remove('on');
 document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')e.currentTarget.classList.remove('on')};
 render();
-try{if(!localStorage.getItem('seen3')){localStorage.setItem('seen3','1');document.getElementById('modal').classList.add('on');}}catch(e){}
+try{if(!localStorage.getItem('seen4')){localStorage.setItem('seen4','1');document.getElementById('modal').classList.add('on');}}catch(e){}
 </script></body></html>
