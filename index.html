@@ -732,7 +732,7 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent;color:inherit}
 .k{display:inline-block;width:18px;height:0;border-top:5px solid var(--amber);border-radius:3px;flex:0 0 auto}
 .k.u{border-top:5px dashed var(--amber)}
 .k.w{border-top:4px dotted var(--teal)}
-.k.g{border:none;width:11px;height:11px;border-radius:50%;background:var(--gray);box-shadow:0 0 0 2px var(--surface)}
+.k.g{border:2px dashed var(--rose);width:13px;height:13px;border-radius:50%;background:transparent;box-shadow:none}
 .tb{pointer-events:auto;width:44px;height:44px;border-radius:14px;background:var(--veil);border:1px solid var(--hair);box-shadow:var(--sh);color:var(--acc);font-size:17px;font-weight:700;flex:0 0 auto;display:flex;align-items:center;justify-content:center;padding:0}
 .tb svg{width:20px;height:20px;stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 #tcol{display:flex;flex-direction:column;gap:8px;pointer-events:none}
@@ -807,6 +807,19 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent;color:inherit}
 #mbox td,#mbox th{border-bottom:1px solid var(--hair);padding:7px 4px;text-align:left;color:var(--ink2);vertical-align:top}
 #mbox th{color:var(--mut);font-weight:600;font-size:11.5px}
 
+/* 圖資查無的 3 段：改成警示色虛線圓圈＋問號。原本的灰點與底圖同色系，
+   低縮放等於消失 —— 偏偏這幾段最需要使用者親自去現場看牌子。 */
+.qm{display:flex;align-items:center;justify-content:center;width:28px;height:28px;
+ border:2.5px dashed var(--rose);border-radius:50%;background:var(--surface);
+ color:var(--rose);font-weight:800;font-size:16px;line-height:1;
+ box-shadow:0 1px 3px rgba(21,32,31,.3)}
+.leaflet-marker-icon.qmw{background:none;border:none}
+
+/* popup 裡「先看牌子」的行動提示 */
+.pcheck{display:block;margin-top:9px;padding:9px 11px;border-radius:9px;
+ background:var(--rose-bg);border:1px solid var(--rose-br);color:var(--rose);
+ font-weight:700;font-size:13px;line-height:1.6}
+
 /* ── popup ── */
 .leaflet-popup-content-wrapper{border-radius:14px;background:var(--surface);color:var(--ink2)}
 .leaflet-popup-tip{background:var(--surface)}
@@ -828,7 +841,7 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent;color:inherit}
 <div id="map"></div>
 <div id="top">
  <div id="brand"><h1>台北市假日黃線可停路段 <span class="v">v16</span></h1>
-  <div class="lg"><span><i class="k"></i>比對可信</span><span><i class="k u"></i>範圍無法核算</span><span><i class="k w"></i>涵蓋率低</span><span><i class="k g"></i>圖資查無</span></div>
+  <div class="lg"><span><i class="k"></i>比對可信</span><span><i class="k u"></i>範圍無法核算</span><span><i class="k w"></i>涵蓋率低</span><span><i class="k g"></i>圖資查無・看牌子</span></div>
   <div class="src">線形：交工處禁停紅黃線圖資 <b>2024/07 版</b>　·　現場為準</div></div>
  <div id="tcol">
   <button class="tb" id="open" aria-label="開啟路段清單"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -863,7 +876,8 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent;color:inherit}
   <tr><td>琥珀實線</td><td><b>50</b></td><td>線形與表列範圍都對得起來，涵蓋率算得出來</td></tr>
   <tr><td>琥珀虛線</td><td><b>13</b></td><td><b>表列範圍無法核算</b>（起迄描述解析不出長度，或實測線長遠超過表列範圍）。線是真的，但<span class="hl">線的長度不等於可停範圍</span></td></tr>
   <tr><td>綠色點線</td><td><b>35</b></td><td>涵蓋率偏低或起迄點有偏差，畫出來的線可能短於表列範圍</td></tr>
-  <tr><td>灰點</td><td><b>3</b></td><td>2024/07 圖資查無黃線，灰點只是表列範圍的粗略推估位置</td></tr></table>
+  <tr><td>紅色問號圈</td><td><b>3</b></td><td>2024/07 圖資查無黃線，問號圈只是表列範圍的粗略推估位置，可能偏離上百公尺 —— <b>一定要看現場牌子</b></td></tr></table>
+ <p>後三類共 <b>51 段</b>圖資對不起來，popup 會出現紅色提醒，並把「先看街景找牌子」放在主要按鈕的位置。<span class="hl">這些段一律以現場附牌為準</span>。</p>
  <p>能算出涵蓋率的有 88 段，中位數<b>約 41%</b>（精確值 40.5%） —— 黃線本來就會被車道出入口、路口紅線、公車彎切斷，<b>線短不代表只有那一截</b>。</p>
  <h3>琥珀虛線那 13 段要特別小心</h3>
  <p>例如民族西路表列範圍約 15 公尺，圖資上卻有 105 公尺黃線；北平東路表列 25 公尺、圖資 127 公尺。<span class="hl">多出來的部分不在開放範圍內，停下去照樣開單</span>。這種段一律以現場附牌箭頭為準。</p>
@@ -950,23 +964,24 @@ D.forEach(d=>{
   const r=rel(d);
   let cas,ln;
   if(r==='none'){
-    cas=L.circleMarker(d.c,{radius:9,color:'#fff',weight:3,fillColor:'#9AA3A0',fillOpacity:.9});
+    cas=L.marker(d.c,{icon:L.divIcon({className:'qmw',html:'<div class="qm">?</div>',
+      iconSize:[28,28],iconAnchor:[14,14]}),keyboard:false,title:d.r+'：圖資查無，需現場確認'});
     ln=cas;
   }else{
     cas=L.polyline(d.g,{color:'#4A3708',weight:9,opacity:.3,lineCap:'round'});
-    ln=L.polyline(d.g,{weight:5.5,opacity:1,lineCap:'round'});
+    ln=L.polyline(d.g,{weight:r==='low'?6.5:5.5,opacity:1,lineCap:'round'});
   }
   const g=L.layerGroup(cas===ln?[cas]:[cas,ln]).addTo(map);
   /* 主題切換時線色要跟著換，深色底圖上的琥珀需要提亮 */
   g.__paint=()=>{const dk=isDark();
-    if(r==='none'){cas.setStyle({fillColor:dk?'#7C8785':'#9AA3A0',color:dk?'#182123':'#fff'});return}
+    if(r==='none')return;   // divIcon 走 CSS 變數，主題自動跟隨
     cas.setStyle({color:dk?'#000':'#4A3708',opacity:dk?.45:.3});
     ln.setStyle({color:r==='low'?(dk?'#3FC0A8':'#0E7C6B'):(dk?'#E9AE45':'#C8860D'),
-                 dashArray:r==='ok'?null:(r==='unv'?'11,7':'2,8')});};
+                 dashArray:r==='ok'?null:(r==='unv'?'11,7':'2,11')});};
   g.__paint();
 
   const warnBox=
-    r==='none'?'<span class="pw c">這個灰點只是<b>表列範圍的粗略推估位置</b>，不是實際劃線位置，可能偏離數十至上百公尺。2024/07 圖資在此查不到成段黃線，可能之後才劃設，或表格描述與現場不符。</span>'
+    r==='none'?'<span class="pw c">這個問號圈只是<b>表列範圍的粗略推估位置</b>，不是實際劃線位置，可能偏離數十至上百公尺。2024/07 圖資在此查不到成段黃線，可能之後才劃設，或表格描述與現場不符。</span>'
    :r==='unv'?'<span class="pw a">⚠ <b>表列範圍無法核算</b>：'+(d.cr?'表格起迄約 '+d.cr+' 公尺，但圖資上這條路有 '+d.yl+' 公尺黃線。':'表格的起迄描述解析不出長度。')+'圖上這條線的長度<b>不等於</b>可停範圍，多出來的部分停下去照樣開單 —— 以現場附牌箭頭為準。</span>'
    :r==='low'?'<span class="pw b">⚠ 圖資中的黃線遠短於表列範圍，實際範圍可能不只這幾截。</span>':'';
 
@@ -984,8 +999,14 @@ D.forEach(d=>{
       : '<br>停在哪一側：<b>'+(d.lv==='D'?'表格只寫「雙向」，沒說哪一側':'官方表格未載明')+'</b>')
    +(d.nt?'<br><span style="color:var(--amber-d)">※ '+esc(d.nt)+'</span>':'')
    +warnBox+sideBox
-   +'<span class="pact"><a class="nav" href="'+navu(d)+'" target="_blank" rel="noopener">導航 ↗</a>'
-   +'<a class="sv" href="'+svu(d)+'" target="_blank" rel="noopener">看街景找附牌 ↗</a></span>'
+   +(r==='ok'?'':'<span class="pcheck">⚑ 這段的圖資對不起來，'
+     +(r==='none'?'連位置都只是推估':'實際範圍不明')
+     +'。停之前請先看現場的附牌，牌子怎麼寫就怎麼算。</span>')
+   +(r==='ok'
+     ? '<span class="pact"><a class="nav" href="'+navu(d)+'" target="_blank" rel="noopener">導航 ↗</a>'
+       +'<a class="sv" href="'+svu(d)+'" target="_blank" rel="noopener">看街景找附牌 ↗</a></span>'
+     : '<span class="pact"><a class="nav" href="'+svu(d)+'" target="_blank" rel="noopener">先看街景找牌子 ↗</a>'
+       +'<a class="sv" href="'+navu(d)+'" target="_blank" rel="noopener">導航 ↗</a></span>')
    +'<span class="pfoot">開放範圍以現場附牌箭頭為準，不含對向。街景可能是一兩年前拍的。'
    +(r==='none'?'導航點是推估位置，抵達後請自行找尋。':'')+'</span>';
   cas.bindPopup(html,{maxWidth:330});
